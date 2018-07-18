@@ -1,0 +1,124 @@
+!DOCTYPE html
+
+//  ViewController.swift
+//  GroupSorter
+//
+//  Created by Jennifer Diederich on 10/25/17.
+//  Copyright © 2017 Jennifer Diederich. All rights reserved.
+//
+
+import UIKit
+
+// : states that our class is a sub class of parent class (blue color)
+class ViewController: UIViewController {
+    
+    
+    @IBOutlet weak var rosterLabel: UILabel!
+    var numGroups = 1
+    
+		// Override overrides the parent class viewDidLoad() method
+		// viewDidLoad() is automatically called always... never need to call
+    override func viewDidLoad() {
+			
+				// Still want function from parent, override allows us to add more function to supers function
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+	
+	//
+	// Set number of groups is aclled when user taps Set Number of Groups button
+    @IBAction func setNumberOfGroups(_ sender: UIButton) {
+			
+			// Create an alert popup to ask how many groups user wants
+			// roster sorted into
+			//
+			// Alerts require 4-steps:
+			//
+			// Step 1: Create an instance of UIAlertController class
+			let alert = UIAlertController(title: "Number of Groups",
+			                              message: "How many groups would you like?",
+			                              preferredStyle: .alert)
+			// Step 2: Create action(s) related to buttons on alert
+			let saveAction = UIAlertAction(title: "Save", style: .default) {
+				
+				[unowned self] action in
+				
+				// if first condition true, will move to the next statement before the else... nested if
+				// textField is an object... .text is its content
+				guard let textField = alert.textFields?.first, let numGroupsToSave = textField.text else {
+					return
+				}
+				
+				/* if let textField = alert.textFields?.first {
+						 do something
+						} else {
+						return
+						}
+				*/
+				
+				// Check if the number we got from the alerts textField is a valid integer
+				// If it is not set the numGroups property back to 1.
+				if let groupQuantity = Int(numGroupsToSave) {
+					self.numGroups = groupQuantity
+					
+				} else {
+					self.numGroups = 1
+				}
+				
+				print("Number of groups = \(self.numGroups)")
+				
+			}
+			
+			// Set up a cancel action for our alert
+			let cancelAction = UIAlertAction(title: "Cancel", style: .default)
+			
+			
+			// Add a text field to our alert popup - removed wanted parameters
+			alert.addTextField()
+			
+			// Step 3: Add actions to the alert object cretaed in step 1
+			alert.addAction(saveAction)
+			alert.addAction(cancelAction)
+			
+			
+			// Step 4: Present the alert to the user (Make it visible to them)
+			present(alert, animated: true)
+			
+    }
+	
+	//
+	// groupSort is called when the Sort button is tapped
+	//
+    @IBAction func groupSort(_ sender: UIButton) {
+			
+			// Get location to file we wish to open
+			let fileName = Bundle.main.url(forResource: "roster", withExtension: "txt")
+			
+			// Open and retrieve contents of roster.txt
+			//
+			// Use a do-catch block which is similar to try-catch blocks in other languages.
+			//
+			// The do block runs code (and can include try statements) and the catch block
+			// is used to do any error processing if the do code fails.
+			//
+			// Note that multiple catch blocks can be present with patterns for
+			// specific error conditions.  If a catch block has no pattern (or _),
+			// it will handle any error that occurs (generic catch-all).
+			//
+			do {
+				
+				// 1. Read contents of file roster.txt into a string
+				// 2. Retrieve array of students from file string
+				// 3. Randomize the array of students
+				// 4. Divide randomized students into groups
+				// 5. Create text for roster label for our groups
+				
+			} catch _ {
+				// MARK: - do something here for errors in the future...
+			}
+			
+    }
+	
+
+}
+
